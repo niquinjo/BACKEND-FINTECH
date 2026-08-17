@@ -20,8 +20,6 @@ build/
 
 # Prisma
 .prisma/
-/src/generated/prisma
-/generated/
 
 # Cache
 .cache/
