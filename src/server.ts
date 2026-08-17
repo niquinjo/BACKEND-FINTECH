@@ -9,7 +9,8 @@ app.use(express.json())
 app.use(cors());
 app.use(router);
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+// Adicionado o underline (_) em _req e _next para o TypeScript não reclamar
+app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
   if (error instanceof Error) {
     return res.status(400).json({
       error: error.message
@@ -26,5 +27,3 @@ const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
   console.log("Servidor ON " + PORT);
 })
-
-
