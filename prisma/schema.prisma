@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -66,10 +66,10 @@ model Transaction {
   type        TransactionType // Mudado para Enum para blindar contra erros de digitação
   disable     Boolean         @default(false)
   date        DateTime        @default(now())
-  
+
   // Relacionamento com Categoria
   category_id String
-  category    Category        @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   user_id String
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
