@@ -5,8 +5,20 @@ import { router } from './routes';
 
 const app = express();
 
+const allowedOrigins: string[] = [
+  'https://fintech-frontend.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://127.0.0.1:3000'
+].concat(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []);
+
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(router);
 
 // Adicionado o underline (_) em _req e _next para o TypeScript não reclamar

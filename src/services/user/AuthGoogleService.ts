@@ -23,7 +23,7 @@ class AuthGoogleService {
     // valida o token recebido do frontend diretamente nos servidores do Google
     const ticket = await client.verifyIdToken({
       idToken: googleToken,
-      audience: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      audience: process.env.GOOGLE_CLIENT_ID,
     });
 
     console.log("TOKEN VALIDADO")
