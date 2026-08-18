@@ -5,6 +5,13 @@ import { router } from './routes';
 
 const app = express();
 
+// Headers de segurança e CORS
+app.use((_req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'cross-origin-allow-popups');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  next();
+});
+
 const allowedOrigins: string[] = [
   'https://fintech-ia.vercel.app',
   'http://localhost:3000',
