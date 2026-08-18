@@ -6,11 +6,11 @@ import { router } from './routes';
 const app = express();
 
 const allowedOrigins: string[] = [
-  'https://fintech-frontend.vercel.app',
+  'https://fintech-ia.vercel.app',
   'http://localhost:3000',
   'http://localhost:3001',
   'http://127.0.0.1:3000'
-].concat(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : []);
+];
 
 app.use(express.json())
 app.use(cors({
