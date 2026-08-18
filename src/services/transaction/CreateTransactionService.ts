@@ -1,4 +1,4 @@
-import { TransactionType } from "../../generated/prisma";
+import { TransactionType } from "@prisma/client";
 import prismaClient from "../../prisma/index";
 
 interface CreateTransactionProps {
