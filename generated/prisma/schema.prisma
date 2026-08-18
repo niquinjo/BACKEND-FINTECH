@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// criar uma migrate nova: npx prisma migrate dev 
+// e depois:npx prisma generate
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionType {
+  ENTRADA
+  SAIDA
+}
+
+model User {
+  id        String  @id @default(uuid())
+  name      String
+  email     String  @unique
+  password  String?
+  avatarUrl String?
+  role      Role    @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+  categories   Category[]
+
+  @@map("users")
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String
+
+  // A categoria agora pertence a um usuário!
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+
+  // A MÁGICA ESTÁ AQUI: A combinação de nome e dono não pode se repetir!
+  @@unique([name, user_id])
+  @@map("categories")
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  name        String
+  value       Int // Mantido em centavos
+  description String?
+  type        TransactionType // Mudado para Enum para blindar contra erros de digitação
+  disable     Boolean         @default(false)
+  date        DateTime        @default(now())
+
+  // Relacionamento com Categoria
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("transactions")
+}

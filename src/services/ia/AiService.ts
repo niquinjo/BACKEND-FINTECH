@@ -1,3 +1,11 @@
+const FASTAPI_URL = process.env.FASTAPI_URL || "http://127.0.0.1:8000";
+
+if (!process.env.FASTAPI_URL) {
+  throw new Error(
+    "FASTAPI_URL não configurada."
+  );
+}
+
 export class AiService {
   async fetchAgentAnalysis(
     userMessage: string,
@@ -82,7 +90,7 @@ export class AiService {
       // =====================================================
 
       const response = await fetch(
-        "http://127.0.0.1:8000/analysis",
+        `${FASTAPI_URL}/analysis`,
         {
           method: "POST",
 
